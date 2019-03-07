@@ -1,7 +1,7 @@
 # docker-nginx-server
 Custom Nginx docker image allowing configuration through environment variables and can be used to deploy SPAs.
 
-## Environment Variables
+## Changes to base Nginx server
 
-- `NGINX_PORT`: port on which the server listens (default: `4200`)
-- `NGINX_HTML_PATH`: directory from which files are served (default: `/public`)
+- Environment variable `NGINX_PORT`: port on which the server listens (default: `4200`)
+- `/public`: default directory from which files are served

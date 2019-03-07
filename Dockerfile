@@ -3,15 +3,11 @@ FROM nginx:1.15
 LABEL maintainer="ivan.subotic@unibas.ch"
 
 ENV NGINX_PORT 4200
-ENV NGINX_HTML_PATH "/public"
-
-RUN mkdir -p ${NGINX_HTML_PATH}
 
 ## Copy nginx config template
-COPY config.template /etc/nginx/conf.d/
-RUN /bin/bash -c "envsubst < /etc/nginx/conf.d/config.template > /etc/nginx/conf.d/default.conf"
+COPY config.template /etc/nginx/conf.d/config.template
 
-## Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/*
+## Move default nginx website
+RUN mv /usr/share/nginx/html /public
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD /bin/bash -c "envsubst '\$NGINX_PORT' < /etc/nginx/conf.d/config.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
