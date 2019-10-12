@@ -1,4 +1,4 @@
-FROM nginx:1.15
+FROM nginx:1.17.4
 
 LABEL maintainer="ivan.subotic@unibas.ch"
 
