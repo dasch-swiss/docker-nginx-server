@@ -1,6 +1,6 @@
-FROM nginx:1.17.5
+FROM nginx:1.21.3
 
-LABEL maintainer="ivan.subotic@unibas.ch"
+LABEL maintainer="400790+subotic@users.noreply.github.com"
 
 ENV NGINX_PORT 4200
 
