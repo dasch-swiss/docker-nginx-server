@@ -4,12 +4,13 @@ on:
   push:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
-  
+
   # build allways
   build:
-    name: Build allways and publish on release
+    name: Build allways and publish on release or rebuild
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,12 +28,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      - name: Build (allways) and push (on release)
+      - name: Build (allways) and push (on release or rebuild)
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          push: ${{ github.event_name == 'release' }}
-          tags: daschswiss/nginx-server:latest, daschswiss/nginx-server:${{ steps.get_version.outputs.VERSION }}
+          push: ${{ (github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release' }}
+          # Pull and no-cache ensure that a rebuild uses the latest base image
+          # and that apt-get update/upgrade are run again
+          pull: ${{ github.event_name == 'workflow_dispatch' }}
+          no-cache: ${{ github.event_name == 'workflow_dispatch' }}
+          tags: daschswiss/nginx-server:latest, daschswiss/nginx-server:${{ steps.get_version.outputs.VERSION }}${{ (github.event_name == 'workflow_dispatch' && format('-{0}', github.run_number)) || '' }}
