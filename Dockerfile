@@ -1,4 +1,4 @@
-FROM nginx:1-alpine-slim
+FROM nginx:1
 
 LABEL maintainer="400790+subotic@users.noreply.github.com"
 
