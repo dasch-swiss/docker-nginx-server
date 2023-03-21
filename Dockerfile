@@ -1,4 +1,4 @@
-FROM nginx:1.23.3
+FROM nginx:1
 
 LABEL maintainer="400790+subotic@users.noreply.github.com"
 
