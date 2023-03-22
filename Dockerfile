@@ -1,11 +1,11 @@
-FROM nginx:1
+FROM nginx:1-alpine-slim
 
 LABEL maintainer="400790+subotic@users.noreply.github.com"
 
 ENV NGINX_PORT 4200
 
-## Update packages
-RUN apt-get update && apt-get -y upgrade && rm -rf /var/lib/apt/lists/*
+## Add bash
+RUN apk add bash
 
 ## Copy nginx config template
 COPY config.template /etc/nginx/conf.d/config.template

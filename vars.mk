@@ -9,4 +9,4 @@ endif
 
 ifeq ($(DOCKER_IMAGE),)
 	DOCKER_IMAGE := $(DOCKER_REPO):$(BUILD_TAG)
-endifo
+endif

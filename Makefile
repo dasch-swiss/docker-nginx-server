@@ -9,19 +9,19 @@ include vars.mk
 .PHONY: build-push
 build-push: ## build and push multiplatform Docker image to Docker Hub
 	# linux/amd64 (e.g., intel), linux/arm64 (e.g., Apple Silicon), linux/arm/v7 (e.g., Raspberry Pi)
-	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t $(DOCKER_IMAGE) -t $(DOCKER_REPO):latest --push .
+	docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t $(DOCKER_IMAGE) --push .
 
 .PHONY: build-amd64
 build-amd64: ## build linux/amd64 Docker image locally
-	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE) -t $(DOCKER_REPO):latest --load .
+	docker buildx build --platform linux/amd64 -t $(DOCKER_IMAGE) --load .
 
 .PHONY: build-arm64
 build-arm64: ## build linux/arm64 Docker image locally
-	docker buildx build --platform linux/arm64 -t $(DOCKER_IMAGE) -t $(DOCKER_REPO):latest --load .
+	docker buildx build --platform linux/arm64 -t $(DOCKER_IMAGE) --load .
 
 .PHONY: build-armv7
 build-armv7: ## build linux/arm/v7 Docker image locally
-	docker buildx build --platform linux/arm/v7 -t $(DOCKER_IMAGE) -t $(DOCKER_REPO):latest --load .
+	docker buildx build --platform linux/arm/v7 -t $(DOCKER_IMAGE) --load .
 
 .PHONY: build
 build: build-amd64 build-arm64 build-armv7 ## build all locally
